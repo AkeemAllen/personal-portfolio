@@ -1,30 +1,39 @@
 import React, { useState } from "react";
 import { createUseStyles } from "react-jss";
-import { useSpring, animated } from "react-spring";
+import { useSpring, animated, useSprings } from "react-spring";
 import github from "../assets/Contact Icons/github.svg";
 import mail from "../assets/Contact Icons/mail.svg";
 import twitter from "../assets/Contact Icons/twitter.svg";
 import instagram from "../assets/Contact Icons/instagram.svg";
 import logoCenter from "../assets/Logo Center.svg";
-import logo from "../assets/Logo.svg";
+import { Link } from "react-router-dom";
 
 const Landing = () => {
   const classes = useStyles();
 
-  const [hover, setHover] = useState(false);
+  const icons = [
+    { icon: mail, alt: "mail", transform: 0 },
+    { icon: github, alt: "github", transform: 0 },
+    { icon: twitter, alt: "twitter", transform: 0 },
+    { icon: instagram, alt: "instagram", transform: 0 },
+  ];
 
-  const { transform } = useSpring({
-    transform: `translateY(${hover ? -10 : 0}px)`,
+  const [iconContainerHover, setIconContainerHover] = useState(false);
+  const [iconHover, setIconHover] = useState(false);
+
+  const iconContainerAnimate = useSpring({
+    transform: `scale(${iconContainerHover ? 1.2 : 1})`,
+    backgroundColor: `${
+      iconContainerHover ? "rgba(244, 91, 105,1)" : "rgba(244, 91, 105,0)"
+    }`,
   });
+
+  const [iconSprings, setIconSprings] = useSprings(icons.length, (index) => ({
+    transform: `translateY(${index ? -10 : 0}px)`,
+  }));
 
   return (
     <div className={classes.container}>
-      <img
-        src={logo}
-        alt="logo"
-        style={{ position: "absolute", top: 10, left: 30 }}
-        width="50"
-      />
       <p
         style={{
           position: "absolute",
@@ -35,6 +44,17 @@ const Landing = () => {
         }}
       >
         I Design Sometimes too...
+      </p>
+      <p
+        style={{
+          position: "absolute",
+          top: "50%",
+          left: 100,
+          padding: "1rem",
+          fontSize: "1.4rem",
+        }}
+      >
+        Projects
       </p>
       <div className={classes.centerLogo}>
         <img src={logoCenter} alt="logoCenter" />
@@ -49,27 +69,42 @@ const Landing = () => {
         </text>
       </div>
       <nav className={classes.navigation}>
-        <animated.p
-          className={classes.navItem}
-          onMouseOver={() => {
-            setHover(true);
-          }}
-          onMouseLeave={() => {
-            setHover(false);
-          }}
-          style={{ transform }}
-        >
-          Projects
-        </animated.p>
-        <p className={classes.navItem}>Bio</p>
-        <p className={classes.navItem}>Experience</p>
+        <Link to="/projects" className={classes.link}>
+          <animated.p className={classes.navItem}>Projects</animated.p>
+        </Link>
+        <Link to="/bio" className={classes.link}>
+          <p className={classes.navItem}>Bio</p>
+        </Link>
+        <Link to="/experience" className={classes.link}>
+          <p className={classes.navItem}>Experience</p>
+        </Link>
       </nav>
-      <div className={classes.contactIcons}>
-        <img src={github} alt="github" className={classes.icon} />
-        <img src={mail} alt="mail" className={classes.icon} />
-        <img src={twitter} alt="twitter" className={classes.icon} />
-        <img src={instagram} alt="instagram" className={classes.icon} />
-      </div>
+      <animated.div
+        className={classes.contactIcons}
+        onMouseEnter={() => setIconContainerHover(true)}
+        onMouseLeave={() => setIconContainerHover(false)}
+        style={iconContainerAnimate}
+      >
+        {iconSprings.map((props, index) => {
+          return (
+            <animated.img
+              onMouseEnter={() =>
+                setIconSprings((i) => ({
+                  transform: `translateY(${index ? -10 : 0}px)`,
+                }))
+              }
+              onMouseLeave={() =>
+                setIconSprings((i) => ({ transform: `translateY(0px)` }))
+              }
+              key={index}
+              src={icons[index].icon}
+              alt={icons[index].alt}
+              className={classes.icon}
+              style={props}
+            />
+          );
+        })}
+      </animated.div>
     </div>
   );
 };
@@ -123,5 +158,9 @@ const useStyles = createUseStyles({
   },
   icon: {
     width: 22,
+  },
+  link: {
+    textDecoration: "none",
+    color: "var(--main-font-color)",
   },
 });
