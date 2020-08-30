@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { createUseStyles } from "react-jss";
-import { useSpring, animated, useSprings } from "react-spring";
+import { useSpring, animated, useSprings, useTrail } from "react-spring";
 import github from "../assets/Contact Icons/github.svg";
 import mail from "../assets/Contact Icons/mail.svg";
 import twitter from "../assets/Contact Icons/twitter.svg";
@@ -21,6 +21,43 @@ const Landing = () => {
   const [iconContainerHover, setIconContainerHover] = useState(false);
   const [iconHover, setIconHover] = useState(false);
 
+  const [navHover, setNavHover] = useState(false);
+  const [dialog, setDialog] = useState("");
+
+  const [hover, setHover] = useState(false);
+  const [clicked, setClicked] = useState(false);
+  const [display, setDisplay] = useState("");
+
+  const animateSideMessage = useSpring({
+    transform: `translateY(${navHover ? 0 : 100}px)`,
+    opacity: navHover ? 1 : 0,
+    from: { opacity: 0, transform: `translateY(100px)` },
+  });
+
+  const logoAnimate = useSpring({
+    to: {
+      transform: `translateY(${clicked ? -100 : 0}px)`,
+    },
+  });
+
+  const navigation = [
+    { name: "Projects", dialog: "Projects", link: "/projects" },
+    { name: "Bio", dialog: "Bio", link: "/bio" },
+    { name: "Experience", dialog: "Experience", link: "/experience" },
+  ];
+
+  const animateNavigation = useTrail(navigation.length, {
+    transform: `translateY(${clicked ? 0 : 100}px) scale(${clicked ? 1 : 0})`,
+    opacity: clicked ? 1 : 0,
+    onRest: () => {
+      clicked
+        ? setDisplay("grid")
+        : setTimeout(() => {
+            setDisplay("none");
+          }, 500);
+    },
+  });
+
   const iconContainerAnimate = useSpring({
     transform: `scale(${iconContainerHover ? 1.2 : 1})`,
     backgroundColor: `${
@@ -29,55 +66,46 @@ const Landing = () => {
   });
 
   const [iconSprings, setIconSprings] = useSprings(icons.length, (index) => ({
-    transform: `translateY(${index ? -10 : 0}px)`,
+    transform: `translateY(0px)`,
   }));
 
   return (
     <div className={classes.container}>
-      <p
+      <p className={classes.cornerText}>I Design Sometimes too...</p>
+      <animated.p
+        className={classes.sideMessage}
         style={{
-          position: "absolute",
-          bottom: 30,
-          left: 100,
-          padding: "1rem",
-          fontSize: "1.4rem",
+          ...animateSideMessage,
         }}
       >
-        I Design Sometimes too...
-      </p>
-      <p
-        style={{
-          position: "absolute",
-          top: "50%",
-          left: 100,
-          padding: "1rem",
-          fontSize: "1.4rem",
-        }}
+        {dialog}
+      </animated.p>
+      <animated.div
+        className={classes.centerLogo}
+        style={logoAnimate}
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
+        onClick={() => setClicked(!clicked)}
       >
-        Projects
-      </p>
-      <div className={classes.centerLogo}>
         <img src={logoCenter} alt="logoCenter" />
-        <text
-          style={{
-            position: "absolute",
-            left: "50%",
-            transform: `translate(-50%)`,
-          }}
-        >
-          A
-        </text>
-      </div>
+        <text className={classes.logoText}>A</text>
+      </animated.div>
       <nav className={classes.navigation}>
-        <Link to="/projects" className={classes.link}>
-          <animated.p className={classes.navItem}>Projects</animated.p>
-        </Link>
-        <Link to="/bio" className={classes.link}>
-          <p className={classes.navItem}>Bio</p>
-        </Link>
-        <Link to="/experience" className={classes.link}>
-          <p className={classes.navItem}>Experience</p>
-        </Link>
+        {animateNavigation.map((navItem, index) => (
+          <animated.div style={navItem}>
+            <Link
+              to={navigation[index].link}
+              className={classes.link}
+              onMouseEnter={() => {
+                setNavHover(true);
+                setDialog(navigation[index].dialog);
+              }}
+              onMouseLeave={() => setNavHover(false)}
+            >
+              <p className={classes.navItem}>{navigation[index].name}</p>
+            </Link>
+          </animated.div>
+        ))}
       </nav>
       <animated.div
         className={classes.contactIcons}
@@ -117,11 +145,12 @@ const useStyles = createUseStyles({
     backgroundImage: "linear-gradient(180deg,#114B5F,#028090)",
     display: "grid",
     justifyItems: "center",
-    alignItems: "center",
+    // gridColumns
     color: "var(--main-font-color)",
     fontFamily: "var(--main-font)",
   },
   centerLogo: {
+    alignSelf: "flex-end",
     display: "grid",
     justifyContent: "center",
     alignItems: "center",
@@ -134,16 +163,17 @@ const useStyles = createUseStyles({
     position: "relative",
   },
   navigation: {
-    position: "absolute",
     display: "grid",
     gridTemplateColumns: "1fr 1fr 1fr",
     columnGap: "5rem",
-    top: "50%",
-    right: 0,
-    transform: "translate(40%, -50%) rotate(-90deg)",
+    overflow: "hidden",
   },
   navItem: {
     fontSize: "1.4rem",
+    padding: "0.5rem",
+    backgroundColor: "rgba(255,255,255,0.25)",
+    borderRadius: "5px",
+    justifySelf: "center",
   },
   contactIcons: {
     position: "absolute",
@@ -162,5 +192,24 @@ const useStyles = createUseStyles({
   link: {
     textDecoration: "none",
     color: "var(--main-font-color)",
+  },
+  sideMessage: {
+    position: "absolute",
+    top: "50%",
+    left: 100,
+    padding: "1rem",
+    fontSize: "1.4rem",
+  },
+  cornerText: {
+    position: "absolute",
+    bottom: 30,
+    left: 100,
+    padding: "1rem",
+    fontSize: "1.4rem",
+  },
+  logoText: {
+    position: "absolute",
+    left: "50%",
+    transform: `translate(-50%)`,
   },
 });
