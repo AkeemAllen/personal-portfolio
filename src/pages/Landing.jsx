@@ -1,12 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { createUseStyles } from "react-jss";
-import { useSpring, animated, useSprings, useTrail } from "react-spring";
+import {
+  useSpring,
+  animated,
+  useSprings,
+  useTrail,
+  interpolate,
+} from "react-spring";
 import github from "../assets/Contact Icons/github.svg";
 import mail from "../assets/Contact Icons/mail.svg";
 import twitter from "../assets/Contact Icons/twitter.svg";
 import instagram from "../assets/Contact Icons/instagram.svg";
 import logoCenter from "../assets/Logo Center.svg";
 import { Link } from "react-router-dom";
+import useOnClickOutside from "../helpers/useOnClickOutside";
+import Backdrop from "../components/Backdrop";
 
 const Landing = () => {
   const classes = useStyles();
@@ -18,6 +26,10 @@ const Landing = () => {
     { icon: instagram, alt: "instagram", transform: 0 },
   ];
 
+  const ref = useRef();
+
+  useOnClickOutside(ref, () => setClicked(false));
+
   const [iconContainerHover, setIconContainerHover] = useState(false);
   const [iconHover, setIconHover] = useState(false);
 
@@ -26,7 +38,6 @@ const Landing = () => {
 
   const [hover, setHover] = useState(false);
   const [clicked, setClicked] = useState(false);
-  const [display, setDisplay] = useState("");
 
   const animateSideMessage = useSpring({
     transform: `translateY(${navHover ? 0 : 100}px)`,
@@ -34,10 +45,8 @@ const Landing = () => {
     from: { opacity: 0, transform: `translateY(100px)` },
   });
 
-  const logoAnimate = useSpring({
-    to: {
-      transform: `translateY(${clicked ? -100 : 0}px)`,
-    },
+  const { xyz } = useSpring({
+    xyz: [clicked ? -200 : 0, hover ? 360 : 0, hover ? 1.1 : 1],
   });
 
   const navigation = [
@@ -49,13 +58,6 @@ const Landing = () => {
   const animateNavigation = useTrail(navigation.length, {
     transform: `translateY(${clicked ? 0 : 100}px) scale(${clicked ? 1 : 0})`,
     opacity: clicked ? 1 : 0,
-    onRest: () => {
-      clicked
-        ? setDisplay("grid")
-        : setTimeout(() => {
-            setDisplay("none");
-          }, 500);
-    },
   });
 
   const iconContainerAnimate = useSpring({
@@ -82,7 +84,11 @@ const Landing = () => {
       </animated.p>
       <animated.div
         className={classes.centerLogo}
-        style={logoAnimate}
+        style={{
+          transform: xyz.interpolate(
+            (x, y, z) => `translateY(${x}px) rotate(${y}deg) scale(${z})`
+          ),
+        }}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
         onClick={() => setClicked(!clicked)}
@@ -90,7 +96,8 @@ const Landing = () => {
         <img src={logoCenter} alt="logoCenter" />
         <text className={classes.logoText}>A</text>
       </animated.div>
-      <nav className={classes.navigation}>
+      {clicked ? <Backdrop /> : null}
+      <nav className={classes.navigation} ref={ref}>
         {animateNavigation.map((navItem, index) => (
           <animated.div style={navItem}>
             <Link
@@ -167,6 +174,7 @@ const useStyles = createUseStyles({
     gridTemplateColumns: "1fr 1fr 1fr",
     columnGap: "5rem",
     overflow: "hidden",
+    zIndex: 1,
   },
   navItem: {
     fontSize: "1.4rem",

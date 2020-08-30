@@ -4,6 +4,7 @@ import Card from "../components/Card";
 import websitePhoto from "../assets/photos/Example Website 2.png";
 import { useSpring, animated } from "react-spring";
 import useOnClickOutside from "../helpers/useOnClickOutside";
+import Backdrop from "../components/Backdrop";
 
 const Projects = () => {
   const ref = useRef();
@@ -45,7 +46,7 @@ const Projects = () => {
           />
         );
       })}
-      {detailedViewOpen ? <div className={classes.backdrop}></div> : null}
+      {detailedViewOpen ? <Backdrop /> : null}
       <animated.div
         ref={ref}
         style={{ transform, opacity, display }}
@@ -96,11 +97,5 @@ const useStyles = createUseStyles({
     width: "30rem",
     height: "15rem",
     borderRadius: "5px",
-  },
-  backdrop: {
-    position: "absolute",
-    zIndex: 10,
-    height: "100vh",
-    width: "100vw",
   },
 });
