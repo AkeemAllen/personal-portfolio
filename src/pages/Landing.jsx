@@ -19,7 +19,7 @@ const Landing = () => {
   ];
 
   const [iconContainerHover, setIconContainerHover] = useState(false);
-  const [iconHover, setIconHover] = useState(false);
+  // const [iconHover, setIconHover] = useState(false);
 
   const iconContainerAnimate = useSpring({
     transform: `scale(${iconContainerHover ? 1.2 : 1})`,
@@ -29,7 +29,7 @@ const Landing = () => {
   });
 
   const [iconSprings, setIconSprings] = useSprings(icons.length, (index) => ({
-    transform: `translateY(${index ? -10 : 0}px)`,
+    transform: `translateY(${index ? 0 : 0}px)`,
   }));
 
   return (
