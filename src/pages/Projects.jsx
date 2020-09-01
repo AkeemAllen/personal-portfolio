@@ -36,54 +36,58 @@ const Projects = () => {
         "Git",
       ],
     },
-    // {
-    //   screenshot: blog,
-    //   name: "Personal Blog",
-    //   url: "https://what-i-learned-mp7em1d6l.now.sh/",
-    //   description: `
-    //     During one summer vacation, when I had a lot of free time and was getting into reading,
-    //     I decided to try my hand at blogging. I also realized that it might be a great
-    //     way to build my web design skills. Essentially killing two birds with one stone.
+    {
+      screenshot: blog,
+      name: "Personal Blog",
+      url: "https://what-i-learned-mp7em1d6l.now.sh/",
+      description: `
+        During one summer vacation, when I had a lot of free time and was getting into reading,
+        I decided to try my hand at blogging. I also realized that it might be a great
+        way to build my web design skills. Essentially killing two birds with one stone.
 
-    //     In building this website I learned a great deal about web hosting, website design,
-    //     SEO, headless CMSs and static sites. This project holds a special place in my heart as it helped
-    //     catapult my skills and confidence in my skills to a whole new level.
-    //   `,
-    //   technologiesUsed: [
-    //     "React",
-    //     "Gatsby",
-    //     "Git",
-    //     "Contentful (headless CMS)",
-    //     "Linode (Web Hosting)",
-    //     "Graphql",
-    //     "Express",
-    //   ],
-    // },
-    // {
-    //   screenshot: alfheim,
-    //   name: "Alfheim(In Development)",
-    //   url: "https://festive-mclean-6c9c4a.netlify.app/",
-    //   description: `
-    //   (In development) Having gone through the struggle of searching for a room to
-    //   rent as a college student in Jamaica, I understand the issue. So I decided to try building a solution.
+        In building this website I learned a great deal about web hosting, website design,
+        SEO, headless CMSs and static sites. This project holds a special place in my heart as it helped
+        catapult my skills and confidence in my skills to a whole new level.
+      `,
+      technologiesUsed: [
+        "React",
+        "Gatsby",
+        "Git",
+        "Contentful (headless CMS)",
+        "Linode (Web Hosting)",
+        "Graphql",
+        "Express",
+      ],
+    },
+    {
+      screenshot: alfheim,
+      name: "Alfheim(In Development)",
+      url: "https://festive-mclean-6c9c4a.netlify.app/",
+      description: `
+      (In development) Having gone through the struggle of searching for a room to
+      rent as a college student in Jamaica, I understand the issue. So I decided to try building a solution.
 
-    //   This is one of the larger projects I have tackled on my own. It's meant to connect landlords in a
-    //   specific geographical region (Kingston, Jamaica) to student rentors who are looking for decent
-    //   rooms for their college tenure. I believe there is room for later expansion in terms of scale and use
-    //   but there are many kinks I have to work out first.
-    //   `,
-    //   technologiesUsed: [
-    //     "React",
-    //     "GraphQl",
-    //     "Git",
-    //     "Express",
-    //     "Apollo Studio and Client(Api Management)",
-    //   ],
-    // },
+      This is one of the larger projects I have tackled on my own. It's meant to connect landlords in a
+      specific geographical region (Kingston, Jamaica) to student rentors who are looking for decent
+      rooms for their college tenure. I believe there is room for later expansion in terms of scale and use
+      but there are many kinks I have to work out first.
+      `,
+      technologiesUsed: [
+        "React",
+        "GraphQl",
+        "Git",
+        "Express",
+        "Apollo Studio and Client(Api Management)",
+      ],
+    },
   ];
 
   const { transform, opacity } = useSpring({
-    transform: detailedViewOpen ? -150 : 500,
+    transform: detailedViewOpen
+      ? window.innerWidth === 1024
+        ? -150
+        : -10
+      : 500,
     opacity: detailedViewOpen ? 1 : 0,
   });
 
@@ -177,30 +181,47 @@ const useStyles = createUseStyles({
   },
   detailedView: {
     position: "fixed",
-    marginTop: "2rem",
-    height: "90vh",
-    width: "30rem",
-    padding: "1rem",
+    zIndex: 1,
+    width: "80vw",
+    padding: "0.5rem",
+    fontSize: "0.8rem",
     backgroundColor: "white",
     boxShadow: "0px 4px 20px 5px rgba(0, 0, 0, 0.25);",
+    marginTop: "2rem",
     right: 0,
-    borderRadius: "5px",
     display: "grid",
     gridAutoRows: "min-content",
-    rowGap: "1rem",
-    zIndex: 1,
+    borderRadius: "5px",
+    rowGap: "0.5rem",
+    // overflow: "auto",
+    "@media (min-width: 1024px)": {
+      fontSize: "1rem",
+      height: "90vh",
+      width: "30rem",
+      rowGap: "1rem",
+      padding: "1rem",
+      right: 0,
+    },
   },
   media: {
-    width: "30rem",
-    height: "15rem",
+    width: "15rem",
+    height: "10rem",
     borderRadius: "5px",
+    objectFit: "cover",
+    "@media (min-width: 1024px)": {
+      width: "30rem",
+      height: "15rem",
+    },
   },
   projectsContainer: {
     display: "grid",
-    gridTemplateColumns: "min-content min-content min-content",
+    gridTemplateColumns: "min-content",
+    justifyContent: "center",
+    "@media (min-width: 1024px)": {
+      gridTemplateColumns: "min-content min-content min-content",
+    },
     columnGap: "3rem",
     paddingTop: "1.5rem",
-    paddingLeft: "3rem",
     rowGap: "2rem",
   },
 });

@@ -26,8 +26,8 @@ const Card = ({ screenshot, name, url, onClick }) => {
           // color: "var(--main-font-color)",
         }}
       >
-        <h2>{name}</h2>
-        <a href={url} target="blank" style={{ color: "black" }}>
+        <h2 className={classes.projectName}>{name}</h2>
+        <a href={url} target="blank" className={classes.projectUri}>
           {url}
         </a>
       </div>
@@ -49,17 +49,29 @@ const useStyles = createUseStyles({
     display: "grid",
     padding: "1rem",
     color: "black",
-    width: "20rem",
-    height: "20rem",
+    width: "15rem",
+    height: "15rem",
+  },
+  projectName: {
+    fontSize: "1.1rem",
+    "@media (min-width: 1024px)": {
+      fontSize: "1.6rem",
+    },
+  },
+  projectUri: {
+    fontSize: "0.8rem",
+    "@media (min-width: 1024px)": {
+      fontSize: "1rem",
+    },
   },
   media: {
-    // "@media (min-width: 1024px)": {
-    //   width: "30rem",
-    //   height: "20rem",
-    // },
+    "@media (min-width: 1024px)": {
+      width: "30rem",
+      height: "15rem",
+    },
     display: "block",
-    width: "30rem",
-    height: "15rem",
+    width: "15rem",
+    height: "10rem",
     borderRadius: "5px",
     objectFit: "cover",
   },
