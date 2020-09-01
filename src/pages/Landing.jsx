@@ -124,7 +124,7 @@ const Landing = () => {
         onMouseLeave={() => setHover(false)}
         onClick={() => setClicked(!clicked)}
       >
-        <img src={logoCenter} alt="logoCenter" />
+        <img src={logoCenter} alt="logoCenter" className={classes.media} />
         <text className={classes.logoText}>A</text>
       </animated.div>
       {clicked ? <Backdrop page="Landing" /> : null}
@@ -193,31 +193,46 @@ const useStyles = createUseStyles({
     height: "100vh",
     display: "grid",
     justifyItems: "center",
-    // gridColumns
     color: "var(--main-font-color)",
     fontFamily: "var(--main-font)",
+    gridTemplateRows: "1fr 0.4fr 0.25fr",
+    "@media (min-width: 1024px)": {},
   },
   centerLogo: {
     alignSelf: "flex-end",
     display: "grid",
     justifyContent: "center",
     alignItems: "center",
-    width: "320px",
-    height: "320px",
     backgroundColor: "#1D1D1D",
     borderRadius: "50%",
     color: "var(--main-color)",
-    fontSize: "10rem",
     position: "relative",
+    fontSize: "3rem",
+    "@media (min-width: 1024px)": {
+      width: "320px",
+      height: "320px",
+      fontSize: "10rem",
+    },
+    width: "120px",
+    height: "120px",
+  },
+  media: {
+    "@media (min-width: 1024px)": {
+      width: "13rem",
+    },
+    width: "5rem",
   },
   navigation: {
     display: "grid",
-    gridAutoColumns: "1fr",
-    gridTemplateColumns: "1fr 1fr",
-    alignItems: "flex-start",
-    columnGap: "5rem",
-    overflow: "hidden",
     zIndex: 1,
+    gridTemplateRows: "min-content min-content",
+    rowGap: "2rem",
+    "@media (min-width: 1024px)": {
+      gridTemplateColumns: "1fr 1fr",
+      alignItems: "flex-start",
+      columnGap: "5rem",
+      overflow: "hidden",
+    },
   },
   navItem: {
     fontSize: "1.4rem",
@@ -230,16 +245,18 @@ const useStyles = createUseStyles({
     justifyContent: "center",
   },
   contactIcons: {
-    position: "fixed",
-    bottom: 30,
-    right: 100,
     display: "grid",
     gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr",
-    columnGap: "4rem",
-    // backgroundColor: "var(--highlight-color)",
-    padding: "1rem",
-    borderRadius: "5px",
-    zIndex: "1",
+    columnGap: "1rem",
+    "@media (min-width: 1024px)": {
+      position: "fixed",
+      bottom: 30,
+      right: 100,
+      columnGap: "4rem",
+      padding: "1rem",
+      borderRadius: "5px",
+      zIndex: "1",
+    },
   },
   icon: {
     display: "flex",
@@ -258,11 +275,15 @@ const useStyles = createUseStyles({
     fontSize: "1.6rem",
   },
   cornerText: {
-    position: "absolute",
-    bottom: 30,
-    left: 100,
-    padding: "1rem",
-    fontSize: "1.4rem",
+    "@media (min-width: 1024px)": {
+      position: "absolute",
+      bottom: 30,
+      left: 100,
+      padding: "1rem",
+      fontSize: "1.4rem",
+      display: "block",
+    },
+    display: "none",
   },
   logoText: {
     position: "absolute",

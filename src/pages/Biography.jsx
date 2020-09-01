@@ -28,15 +28,8 @@ const Biography = () => {
           className={classes.media}
         />
         <animated.div
+          className={classes.bio}
           style={{
-            display: "grid",
-            padding: "2rem",
-            backgroundColor: "aliceblue",
-            borderRadius: "20px",
-            maxWidth: "40vw",
-            fontFamily: "Oxygen",
-            lineHeight: "2rem",
-            marginBottom: "3rem",
             ...animateBody,
           }}
         >
@@ -117,16 +110,35 @@ const useStyles = createUseStyles({
     color: "var(--main-font-color)",
     marginBottom: "5rem",
   },
+  bio: {
+    display: "grid",
+    padding: "2rem",
+    backgroundColor: "aliceblue",
+    borderRadius: "10px",
+    maxWidth: "70vw",
+    fontFamily: "Oxygen",
+    lineHeight: "2rem",
+    marginBottom: "3rem",
+    fontSize: "0.9rem",
+    "@media (min-width: 1024px)": {
+      maxWidth: "40vw",
+      borderRadius: "20px",
+      fontSize: "1rem",
+    },
+  },
   media: {
-    width: "320px",
-    height: "320px",
+    width: "150px",
+    height: "150px",
     objectFit: "cover",
     borderRadius: "50%",
+    "@media (min-width: 1024px)": {
+      width: "320px",
+      height: "320px",
+    },
   },
   content: {
     display: "grid",
     rowGap: "3rem",
-    // justifyContent: "center",
     justifyItems: "center",
   },
 });

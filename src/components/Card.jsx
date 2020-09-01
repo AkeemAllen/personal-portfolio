@@ -39,18 +39,28 @@ export default Card;
 
 const useStyles = createUseStyles({
   container: {
+    "@media (min-width: 1024px)": {
+      width: "30rem",
+      height: "20rem",
+    },
     backgroundColor: "#EBF2FA",
     borderRadius: "5px",
-    width: "30rem",
-    height: "20rem",
     boxShadow: "0px 4px 20px 5px rgba(0, 0, 0, 0.25);",
     display: "grid",
     padding: "1rem",
     color: "black",
+    width: "20rem",
+    height: "20rem",
   },
   media: {
+    // "@media (min-width: 1024px)": {
+    //   width: "30rem",
+    //   height: "20rem",
+    // },
+    display: "block",
     width: "30rem",
     height: "15rem",
     borderRadius: "5px",
+    objectFit: "cover",
   },
 });

@@ -36,51 +36,50 @@ const Projects = () => {
         "Git",
       ],
     },
-    {
-      screenshot: blog,
-      name: "Personal Blog",
-      url: "https://what-i-learned-mp7em1d6l.now.sh/",
-      description: `
-        During one summer vacation, when I had a lot of free time and was getting into reading, 
-        I decided to try my hand at blogging. I also realized that it might be a great 
-        way to build my web design skills. Essentially killing two birds with one stone.
+    // {
+    //   screenshot: blog,
+    //   name: "Personal Blog",
+    //   url: "https://what-i-learned-mp7em1d6l.now.sh/",
+    //   description: `
+    //     During one summer vacation, when I had a lot of free time and was getting into reading,
+    //     I decided to try my hand at blogging. I also realized that it might be a great
+    //     way to build my web design skills. Essentially killing two birds with one stone.
 
-        
-        In building this website I learned a great deal about web hosting, website design, 
-        SEO, headless CMSs and static sites. This project holds a special place in my heart as it helped
-        catapult my skills and confidence in my skills to a whole new level.
-      `,
-      technologiesUsed: [
-        "React",
-        "Gatsby",
-        "Git",
-        "Contentful (headless CMS)",
-        "Linode (Web Hosting)",
-        "Graphql",
-        "Express",
-      ],
-    },
-    {
-      screenshot: alfheim,
-      name: "Alfheim(In Development)",
-      url: "https://festive-mclean-6c9c4a.netlify.app/",
-      description: `
-      (In development) Having gone through the struggle of searching for a room to 
-      rent as a college student in Jamaica, I understand the issue. So I decided to try building a solution.
+    //     In building this website I learned a great deal about web hosting, website design,
+    //     SEO, headless CMSs and static sites. This project holds a special place in my heart as it helped
+    //     catapult my skills and confidence in my skills to a whole new level.
+    //   `,
+    //   technologiesUsed: [
+    //     "React",
+    //     "Gatsby",
+    //     "Git",
+    //     "Contentful (headless CMS)",
+    //     "Linode (Web Hosting)",
+    //     "Graphql",
+    //     "Express",
+    //   ],
+    // },
+    // {
+    //   screenshot: alfheim,
+    //   name: "Alfheim(In Development)",
+    //   url: "https://festive-mclean-6c9c4a.netlify.app/",
+    //   description: `
+    //   (In development) Having gone through the struggle of searching for a room to
+    //   rent as a college student in Jamaica, I understand the issue. So I decided to try building a solution.
 
-      This is one of the larger projects I have tackled on my own. It's meant to connect landlords in a 
-      specific geographical region (Kingston, Jamaica) to student rentors who are looking for decent 
-      rooms for their college tenure. I believe there is room for later expansion in terms of scale and use 
-      but there are many kinks I have to work out first.
-      `,
-      technologiesUsed: [
-        "React",
-        "GraphQl",
-        "Git",
-        "Express",
-        "Apollo Studio and Client(Api Management)",
-      ],
-    },
+    //   This is one of the larger projects I have tackled on my own. It's meant to connect landlords in a
+    //   specific geographical region (Kingston, Jamaica) to student rentors who are looking for decent
+    //   rooms for their college tenure. I believe there is room for later expansion in terms of scale and use
+    //   but there are many kinks I have to work out first.
+    //   `,
+    //   technologiesUsed: [
+    //     "React",
+    //     "GraphQl",
+    //     "Git",
+    //     "Express",
+    //     "Apollo Studio and Client(Api Management)",
+    //   ],
+    // },
   ];
 
   const { transform, opacity } = useSpring({
