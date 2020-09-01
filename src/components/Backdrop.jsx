@@ -4,7 +4,7 @@ export default function Backdrop({ page }) {
   return (
     <div
       style={{
-        position: "absolute",
+        position: "fixed",
         zIndex: 1,
         minHeight: "100%",
         minWidth: "100vw",
