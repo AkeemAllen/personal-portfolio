@@ -7,6 +7,7 @@ import alfheim from "../assets/photos/Alfheim.png";
 import { useSpring, animated, useTrail } from "react-spring";
 import useOnClickOutside from "../helpers/useOnClickOutside";
 import Backdrop from "../components/Backdrop";
+import BackButton from "../components/BackButton";
 
 const Projects = () => {
   const ref = useRef();
@@ -23,7 +24,7 @@ const Projects = () => {
       name: "Personal Portfolio",
       url: "https://sleepy-knuth-ecfe83.netlify.app/",
       description: `
-                      This website serves as a portfolio for my best pieces of work. 
+                      This website serves as a portfolio of my best pieces of work. 
                       It also serves as a testament to the growth of my skills as it took me less than a week to go
                       from design and code implementation to delivery.
                       I am truly proud of this creation and it will serve as a test bench for many future ideas.
@@ -126,7 +127,9 @@ const Projects = () => {
         className={classes.detailedView}
       >
         <h1>{projects[index].name}</h1>
-        <a href={projects[index].url}>{projects[index].url}</a>
+        <a href={projects[index].url} target="blank">
+          {projects[index].url}
+        </a>
         <img
           src={projects[index].screenshot}
           alt="screenshot"
@@ -154,6 +157,7 @@ const Projects = () => {
           {projects[index].technologiesUsed.map((tech) => `${tech}, `)}
         </p>
       </animated.div>
+      <BackButton />
     </div>
   );
 };

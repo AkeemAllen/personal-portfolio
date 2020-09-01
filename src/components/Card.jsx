@@ -27,7 +27,7 @@ const Card = ({ screenshot, name, url, onClick }) => {
         }}
       >
         <h2>{name}</h2>
-        <a href="google.com" style={{ color: "black" }}>
+        <a href={url} target="blank" style={{ color: "black" }}>
           {url}
         </a>
       </div>

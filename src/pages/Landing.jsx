@@ -98,7 +98,9 @@ const Landing = () => {
 
   return (
     <div className={classes.container}>
-      <p className={classes.cornerText}>I Design Sometimes too...</p>
+      <p className={classes.cornerText}>
+        I value <strong>Simple, Sleek, Efficient</strong>
+      </p>
       <animated.p
         className={classes.sideMessage}
         style={{
