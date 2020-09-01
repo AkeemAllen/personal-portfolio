@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Backdrop() {
+export default function Backdrop({ page }) {
   return (
     <div
       style={{
@@ -8,6 +8,7 @@ export default function Backdrop() {
         zIndex: 1,
         height: "100vh",
         width: "100vw",
+        backgroundColor: `rgba(0,0,0,${page === "Landing" ? 0 : 0.25})`,
       }}
     ></div>
   );

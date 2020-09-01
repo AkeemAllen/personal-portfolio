@@ -22,12 +22,14 @@ const Projects = () => {
       name: "Personal Portfolio",
       url: "https://akeemallen.com",
       description: `A portfolio meant to show off my abilities and achievements`,
+      technologiesUsed: ["React", "Figma(For Designs)"],
     },
     {
       screenshot: websitePhoto2,
       name: "Personal Blog",
       url: "https://what-i-learned-mp7em1d6l.now.sh/",
       description: `My Personal Blog Site`,
+      technologiesUsed: ["React", "Gatsby", "Contentful"],
     },
   ];
 
@@ -90,16 +92,16 @@ const useStyles = createUseStyles({
   container: {
     display: "grid",
     gridTemplateRows: "1fr 10fr",
-    paddingLeft: "6rem",
     fontFamily: "Share Tech",
     minHeight: "100vh",
   },
   header: {
+    paddingLeft: "6rem",
     paddingTop: "1rem",
     color: "var(--main-font-color)",
   },
   detailedView: {
-    position: "absolute",
+    position: "fixed",
     marginTop: "2rem",
     height: "90vh",
     width: "30rem",

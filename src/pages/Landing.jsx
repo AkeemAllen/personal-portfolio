@@ -120,7 +120,7 @@ const Landing = () => {
         <img src={logoCenter} alt="logoCenter" />
         <text className={classes.logoText}>A</text>
       </animated.div>
-      {clicked ? <Backdrop /> : null}
+      {clicked ? <Backdrop page="Landing" /> : null}
       <nav className={classes.navigation} ref={ref}>
         {animateNavigation.map((navItem, index) => (
           <animated.div
