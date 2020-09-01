@@ -6,7 +6,7 @@ const Card = ({ screenshot, name, url, onClick }) => {
   const [hover, setHover] = useState(false);
 
   const { transform } = useSpring({
-    transform: `scale(${hover ? 1.1 : 1})`,
+    transform: hover ? 1.1 : 1,
   });
 
   const classes = useStyles();
@@ -16,18 +16,18 @@ const Card = ({ screenshot, name, url, onClick }) => {
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       onClick={onClick}
-      style={{ transform }}
+      style={{ transform: transform.interpolate((s) => `scale(${s})`) }}
     >
       <img src={screenshot} alt="website" className={classes.media} />
       <div
         style={{
           marginLeft: "1rem",
           display: "grid",
-          color: "var(--main-font-color)",
+          // color: "var(--main-font-color)",
         }}
       >
         <h2>{name}</h2>
-        <a href="google.com" style={{ color: "var(--main-font-color)" }}>
+        <a href="google.com" style={{ color: "black" }}>
           {url}
         </a>
       </div>
@@ -39,13 +39,14 @@ export default Card;
 
 const useStyles = createUseStyles({
   container: {
-    backgroundColor: "#456990",
+    backgroundColor: "#EBF2FA",
     borderRadius: "5px",
     width: "30rem",
     height: "20rem",
     boxShadow: "0px 4px 20px 5px rgba(0, 0, 0, 0.25);",
     display: "grid",
     padding: "1rem",
+    color: "black",
   },
   media: {
     width: "30rem",
