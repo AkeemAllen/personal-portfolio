@@ -1,7 +1,7 @@
 import LandingPage from "./pages/Landing";
 import Projects from "./pages/Projects";
 import Biography from "./pages/Biography";
-import Experience from "./pages/Experience";
+// import Skills from "./pages/Skills";
 
 export default [
   {
@@ -17,8 +17,8 @@ export default [
     path: "/bio",
     component: Biography,
   },
-  {
-    path: "/experience",
-    component: Experience,
-  },
+  // {
+  //   path: "/my-skills",
+  //   component: Skills,
+  // },
 ];

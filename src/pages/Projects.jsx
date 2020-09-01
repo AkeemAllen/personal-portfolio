@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import { createUseStyles } from "react-jss";
 import Card from "../components/Card";
 import websitePhoto from "../assets/photos/Example Website 2.png";
+import websitePhoto2 from "../assets/photos/Example Website 3.png";
 import { useSpring, animated } from "react-spring";
 import useOnClickOutside from "../helpers/useOnClickOutside";
 import Backdrop from "../components/Backdrop";
@@ -22,34 +23,52 @@ const Projects = () => {
       url: "https://akeemallen.com",
       description: `A portfolio meant to show off my abilities and achievements`,
     },
+    {
+      screenshot: websitePhoto2,
+      name: "Personal Blog",
+      url: "https://what-i-learned-mp7em1d6l.now.sh/",
+      description: `My Personal Blog Site`,
+    },
   ];
 
-  const { transform, opacity, display } = useSpring({
-    // display: detailedViewOpen ? "" : "none",
-    transform: `translateX(${detailedViewOpen ? -150 : 500}px)`,
+  const { transform, opacity } = useSpring({
+    transform: detailedViewOpen ? -150 : 500,
     opacity: detailedViewOpen ? 1 : 0,
   });
 
   return (
     <div className={classes.container}>
       <h1 className={classes.header}>Projects</h1>
-      {projects.map((project, index) => {
-        return (
-          <Card
-            screenshot={project.screenshot}
-            name={project.name}
-            url={project.url}
-            onClick={() => {
-              setDetailedViewOpen(true);
-              setIndex(index);
-            }}
-          />
-        );
-      })}
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "min-content min-content",
+          columnGap: "3rem",
+          paddingTop: "1.5rem",
+          paddingLeft: "3rem",
+        }}
+      >
+        {projects.map((project, index) => {
+          return (
+            <Card
+              screenshot={project.screenshot}
+              name={project.name}
+              url={project.url}
+              onClick={() => {
+                setDetailedViewOpen(true);
+                setIndex(index);
+              }}
+            />
+          );
+        })}
+      </div>
       {detailedViewOpen ? <Backdrop /> : null}
       <animated.div
         ref={ref}
-        style={{ transform, opacity, display }}
+        style={{
+          transform: transform.interpolate((t) => `translateX(${t}px)`),
+          opacity: opacity.interpolate((o) => o),
+        }}
         className={classes.detailedView}
       >
         <h1>{projects[index].name}</h1>
@@ -71,12 +90,13 @@ const useStyles = createUseStyles({
   container: {
     display: "grid",
     gridTemplateRows: "1fr 10fr",
-    rowGap: "5rem",
     paddingLeft: "6rem",
     fontFamily: "Share Tech",
+    minHeight: "100vh",
   },
   header: {
     paddingTop: "1rem",
+    color: "var(--main-font-color)",
   },
   detailedView: {
     position: "absolute",

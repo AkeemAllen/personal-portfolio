@@ -1,16 +1,11 @@
 import React, { useState, useRef } from "react";
 import { createUseStyles } from "react-jss";
-import {
-  useSpring,
-  animated,
-  useSprings,
-  useTrail,
-  interpolate,
-} from "react-spring";
+import { useSpring, animated, useSprings, useTrail } from "react-spring";
 import github from "../assets/Contact Icons/github.svg";
 import mail from "../assets/Contact Icons/mail.svg";
 import twitter from "../assets/Contact Icons/twitter.svg";
 import instagram from "../assets/Contact Icons/instagram.svg";
+import linkedIn from "../assets/Contact Icons/linkedin.svg";
 import logoCenter from "../assets/Logo Center.svg";
 import { Link } from "react-router-dom";
 import useOnClickOutside from "../helpers/useOnClickOutside";
@@ -19,19 +14,12 @@ import Backdrop from "../components/Backdrop";
 const Landing = () => {
   const classes = useStyles();
 
-  const icons = [
-    { icon: mail, alt: "mail", transform: 0 },
-    { icon: github, alt: "github", transform: 0 },
-    { icon: twitter, alt: "twitter", transform: 0 },
-    { icon: instagram, alt: "instagram", transform: 0 },
-  ];
-
   const ref = useRef();
 
   useOnClickOutside(ref, () => setClicked(false));
 
   const [iconContainerHover, setIconContainerHover] = useState(false);
-  const [iconHover, setIconHover] = useState(false);
+  // const [iconHover, setIconHover] = useState(false);
 
   const [navHover, setNavHover] = useState(false);
   const [dialog, setDialog] = useState("");
@@ -45,14 +33,20 @@ const Landing = () => {
     from: { opacity: 0, transform: `translateY(100px)` },
   });
 
-  const { xyz } = useSpring({
+  const { xyz, boxShadowOpacity } = useSpring({
     xyz: [clicked ? -200 : 0, hover ? 360 : 0, hover ? 1.1 : 1],
+    boxShadowOpacity: hover ? 0.5 : 0,
   });
 
   const navigation = [
-    { name: "Projects", dialog: "Projects", link: "/projects" },
-    { name: "Bio", dialog: "Bio", link: "/bio" },
-    { name: "Experience", dialog: "Experience", link: "/experience" },
+    {
+      name: "Projects",
+      dialog: "See The Projects I've Done",
+      link: "/projects",
+    },
+    { name: "Bio", dialog: "Learn More About Me", link: "/bio" },
+    // { name: "Skills", dialog: "See What I Can Do", link: "/my-skills" },
+    // { name: "My Resume", dialog: "", link: "/experience" },
   ];
 
   const animateNavigation = useTrail(navigation.length, {
@@ -60,16 +54,42 @@ const Landing = () => {
     opacity: clicked ? 1 : 0,
   });
 
-  const iconContainerAnimate = useSpring({
-    transform: `scale(${iconContainerHover ? 1.2 : 1})`,
-    backgroundColor: `${
-      iconContainerHover ? "rgba(244, 91, 105,1)" : "rgba(244, 91, 105,0)"
-    }`,
+  const { scale, backgroundOpacity } = useSpring({
+    scale: iconContainerHover ? 1.2 : 1,
+    backgroundOpacity: iconContainerHover ? 1 : 0,
   });
 
-  const [iconSprings, setIconSprings] = useSprings(icons.length, (index) => ({
-    transform: `translateY(0px)`,
-  }));
+  const icons = [
+    { icon: mail, alt: "mail", url: "mailto:allenakeem8@gmail.com" },
+    { icon: github, alt: "github", url: "https://github.com/AkeemAllen" },
+    {
+      icon: linkedIn,
+      alt: "linkedIn",
+      url: "https://www.linkedin.com/in/akeem-allen-796278162/",
+    },
+    {
+      icon: twitter,
+      alt: "twitter",
+      url: "https://twitter.com/Akstar39306982/",
+    },
+    {
+      icon: instagram,
+      alt: "instagram",
+      url: "https://www.instagram.com/beyond4321/",
+    },
+  ];
+
+  const [iconIndex, setIconIndex] = useState();
+
+  const iconSprings = useSprings(
+    icons.length,
+    icons.map((icon, i) => ({
+      transform: `scale(${i === iconIndex ? 1.5 : 1})`,
+      backgroundColor: `rgba(228, 253, 225, ${i === iconIndex ? 0.25 : 0})`,
+      borderRadius: "5px",
+      padding: "0.3rem",
+    }))
+  );
 
   return (
     <div className={classes.container}>
@@ -88,6 +108,10 @@ const Landing = () => {
           transform: xyz.interpolate(
             (x, y, z) => `translateY(${x}px) rotate(${y}deg) scale(${z})`
           ),
+          boxShadow: boxShadowOpacity.interpolate(
+            (o) => `0px 0px 40px 20px rgba(0,0,0,${o})`
+          ),
+          cursor: "pointer",
         }}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
@@ -99,7 +123,13 @@ const Landing = () => {
       {clicked ? <Backdrop /> : null}
       <nav className={classes.navigation} ref={ref}>
         {animateNavigation.map((navItem, index) => (
-          <animated.div style={navItem}>
+          <animated.div
+            style={
+              index === 3
+                ? { backgroundColor: "var(--highlight-color)", ...navItem }
+                : navItem
+            }
+          >
             <Link
               to={navigation[index].link}
               className={classes.link}
@@ -118,25 +148,29 @@ const Landing = () => {
         className={classes.contactIcons}
         onMouseEnter={() => setIconContainerHover(true)}
         onMouseLeave={() => setIconContainerHover(false)}
-        style={iconContainerAnimate}
+        style={{
+          transform: scale.interpolate((s) => `scale(${s})`),
+          backgroundColor: backgroundOpacity.interpolate(
+            (o) => `rgba(244, 91, 105,${o})`
+          ),
+        }}
       >
-        {iconSprings.map((props, index) => {
+        {iconSprings.map((prop, index) => {
           return (
-            <animated.img
-              onMouseEnter={() =>
-                setIconSprings((i) => ({
-                  transform: `translateY(${index ? -10 : 0}px)`,
-                }))
-              }
-              onMouseLeave={() =>
-                setIconSprings((i) => ({ transform: `translateY(0px)` }))
-              }
-              key={index}
-              src={icons[index].icon}
-              alt={icons[index].alt}
+            <animated.a
+              href={icons[index].url}
+              style={prop}
               className={classes.icon}
-              style={props}
-            />
+              target="blank"
+            >
+              <img
+                onMouseEnter={() => setIconIndex(index)}
+                onMouseLeave={() => setIconIndex(null)}
+                key={index}
+                src={icons[index].icon}
+                alt={icons[index].alt}
+              />
+            </animated.a>
           );
         })}
       </animated.div>
@@ -149,7 +183,6 @@ export default Landing;
 const useStyles = createUseStyles({
   container: {
     height: "100vh",
-    backgroundImage: "linear-gradient(180deg,#114B5F,#028090)",
     display: "grid",
     justifyItems: "center",
     // gridColumns
@@ -171,7 +204,9 @@ const useStyles = createUseStyles({
   },
   navigation: {
     display: "grid",
-    gridTemplateColumns: "1fr 1fr 1fr",
+    gridAutoColumns: "1fr",
+    gridTemplateColumns: "1fr 1fr",
+    alignItems: "flex-start",
     columnGap: "5rem",
     overflow: "hidden",
     zIndex: 1,
@@ -179,22 +214,28 @@ const useStyles = createUseStyles({
   navItem: {
     fontSize: "1.4rem",
     padding: "0.5rem",
+    width: "10rem",
     backgroundColor: "rgba(255,255,255,0.25)",
     borderRadius: "5px",
     justifySelf: "center",
+    display: "grid",
+    justifyContent: "center",
   },
   contactIcons: {
     position: "absolute",
     bottom: 30,
     right: 100,
     display: "grid",
-    gridTemplateColumns: "1fr 1fr 1fr 1fr",
+    gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr",
     columnGap: "4rem",
     // backgroundColor: "var(--highlight-color)",
     padding: "1rem",
     borderRadius: "5px",
+    zIndex: "1",
   },
   icon: {
+    display: "flex",
+    justifyContent: "center",
     width: 22,
   },
   link: {
@@ -206,7 +247,7 @@ const useStyles = createUseStyles({
     top: "50%",
     left: 100,
     padding: "1rem",
-    fontSize: "1.4rem",
+    fontSize: "1.6rem",
   },
   cornerText: {
     position: "absolute",
