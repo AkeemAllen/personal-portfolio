@@ -3,7 +3,7 @@ import { createUseStyles } from "react-jss";
 import Card from "../components/Card";
 import websitePhoto from "../assets/photos/Example Website 2.png";
 import websitePhoto2 from "../assets/photos/Example Website 3.png";
-import { useSpring, animated } from "react-spring";
+import { useSpring, animated, useTrail } from "react-spring";
 import useOnClickOutside from "../helpers/useOnClickOutside";
 import Backdrop from "../components/Backdrop";
 
@@ -38,29 +38,41 @@ const Projects = () => {
     opacity: detailedViewOpen ? 1 : 0,
   });
 
+  const animateProjects = useTrail(projects.length, {
+    transform: `translateY(0px) scale(1)`,
+    opacity: 1,
+    from: {
+      transform: `translateY(100px) scale(0)`,
+      opacity: 0,
+    },
+  });
+
   return (
     <div className={classes.container}>
       <h1 className={classes.header}>Projects</h1>
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "min-content min-content",
+          gridTemplateColumns: "min-content min-content min-content",
           columnGap: "3rem",
           paddingTop: "1.5rem",
           paddingLeft: "3rem",
+          rowGap: "2rem",
         }}
       >
-        {projects.map((project, index) => {
+        {animateProjects.map((project, index) => {
           return (
-            <Card
-              screenshot={project.screenshot}
-              name={project.name}
-              url={project.url}
-              onClick={() => {
-                setDetailedViewOpen(true);
-                setIndex(index);
-              }}
-            />
+            <animated.div style={project}>
+              <Card
+                screenshot={projects[index].screenshot}
+                name={projects[index].name}
+                url={projects[index].url}
+                onClick={() => {
+                  setDetailedViewOpen(true);
+                  setIndex(index);
+                }}
+              />
+            </animated.div>
           );
         })}
       </div>

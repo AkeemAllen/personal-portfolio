@@ -54,9 +54,14 @@ const Landing = () => {
     opacity: clicked ? 1 : 0,
   });
 
-  const { scale, backgroundOpacity } = useSpring({
-    scale: iconContainerHover ? 1.2 : 1,
+  const { backgroundOpacity } = useSpring({
     backgroundOpacity: iconContainerHover ? 1 : 0,
+    // transform: 0,
+    // opacity: 1,
+    from: {
+      // transform: 500,
+      // opacity: 0,
+    },
   });
 
   const icons = [
@@ -149,10 +154,11 @@ const Landing = () => {
         onMouseEnter={() => setIconContainerHover(true)}
         onMouseLeave={() => setIconContainerHover(false)}
         style={{
-          transform: scale.interpolate((s) => `scale(${s})`),
+          // transform: transform.interpolate((t) => `translateX(${t}px)`),
           backgroundColor: backgroundOpacity.interpolate(
             (o) => `rgba(244, 91, 105,${o})`
           ),
+          // opacity: opacity,
         }}
       >
         {iconSprings.map((prop, index) => {
@@ -222,7 +228,7 @@ const useStyles = createUseStyles({
     justifyContent: "center",
   },
   contactIcons: {
-    position: "absolute",
+    position: "fixed",
     bottom: 30,
     right: 100,
     display: "grid",
