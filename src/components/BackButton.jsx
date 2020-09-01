@@ -5,7 +5,7 @@ import { useSpring, animated } from "react-spring";
 const BackButton = () => {
   const [hover, setHover] = useState(false);
 
-  const { transform, x } = useSpring({
+  const { x } = useSpring({
     x: hover ? 1.1 : 1,
   });
   return (
