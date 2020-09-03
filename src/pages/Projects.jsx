@@ -22,7 +22,7 @@ const Projects = () => {
     {
       screenshot: portfolio,
       name: "Personal Portfolio",
-      url: "https://sleepy-knuth-ecfe83.netlify.app/",
+      url: "https://akeem-allen.netlify.app/",
       description: `
                       This website serves as a portfolio of my best pieces of work. 
                       It also serves as a testament to the growth of my skills as it took me less than a week to go
@@ -62,7 +62,7 @@ const Projects = () => {
     {
       screenshot: alfheim,
       name: "Alfheim(In Development)",
-      url: "https://lucid-babbage-39ad74.netlify.app/",
+      url: "https://alfheim.netlify.app/",
       description: `
       (In development) Having gone through the struggle of searching for a room to
       rent as a college student in Jamaica, I understand the issue. So I decided to try building a solution.
