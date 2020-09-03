@@ -247,20 +247,25 @@ const useStyles = createUseStyles({
   contactIcons: {
     display: "grid",
     gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr",
+    // gridTemplateRows: "min-content",
+    alignSelf: "center",
     columnGap: "1rem",
+    borderRadius: "10px",
+    alignItems: "center",
     "@media (min-width: 1024px)": {
       position: "fixed",
       bottom: 30,
       right: 100,
+      borderRadius: "5px",
       columnGap: "4rem",
       padding: "1rem",
-      borderRadius: "5px",
       zIndex: "1",
     },
   },
   icon: {
     display: "flex",
     justifyContent: "center",
+    alignItems: "center",
     width: 22,
   },
   link: {
