@@ -35,6 +35,7 @@ const Projects = () => {
         "Netlify (For Hosting)",
         "Git",
       ],
+      github: "https://github.com/AkeemAllen/personal-portfolio",
     },
     {
       screenshot: blog,
@@ -58,6 +59,7 @@ const Projects = () => {
         "Graphql",
         "Express",
       ],
+      github: "https://github.com/AkeemAllen/what-i-learned",
     },
     {
       screenshot: alfheim,
@@ -79,6 +81,7 @@ const Projects = () => {
         "Express",
         "Apollo Studio and Client(Api Management)",
       ],
+      github: "https://github.com/AkeemAllen/project-alfheim",
     },
   ];
 
@@ -138,6 +141,10 @@ const Projects = () => {
           alt="screenshot"
           className={classes.media}
         />
+        <h3>Source Code</h3>
+        <a href={projects[index].github} target="blank">
+          {projects[index].github}
+        </a>
         <h3>Description</h3>
         <p
           style={{
