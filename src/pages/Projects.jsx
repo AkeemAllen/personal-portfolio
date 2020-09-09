@@ -22,7 +22,7 @@ const Projects = () => {
     {
       screenshot: portfolio,
       name: "Personal Portfolio",
-      url: "https://akeem-allen.netlify.app/",
+      url: "https://www.akeem.tech/",
       description: `
                       This website serves as a portfolio of my best pieces of work. 
                       It also serves as a testament to the growth of my skills as it took me less than a week to go
