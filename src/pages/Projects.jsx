@@ -40,7 +40,7 @@ const Projects = () => {
     {
       screenshot: blog,
       name: "Personal Blog",
-      url: "https://what-i-learned-mp7em1d6l.now.sh/",
+      url: "https://blog.akeem.tech",
       description: `
         During one summer vacation, when I had a lot of free time and was getting into reading,
         I decided to try my hand at blogging. I also realized that it might be a great
