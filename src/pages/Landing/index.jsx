@@ -1,25 +1,22 @@
 import React, { useState, useRef } from "react";
-import { createUseStyles } from "react-jss";
 import { useSpring, animated, useSprings, useTrail } from "react-spring";
-import github from "../assets/Contact Icons/github.svg";
-import mail from "../assets/Contact Icons/mail.svg";
-import twitter from "../assets/Contact Icons/twitter.svg";
-import instagram from "../assets/Contact Icons/instagram.svg";
-import linkedIn from "../assets/Contact Icons/linkedin.svg";
-import logoCenter from "../assets/Logo Center.svg";
+import github from "../../assets/Contact Icons/github.svg";
+import mail from "../../assets/Contact Icons/mail.svg";
+import twitter from "../../assets/Contact Icons/twitter.svg";
+import instagram from "../../assets/Contact Icons/instagram.svg";
+import linkedIn from "../../assets/Contact Icons/linkedin.svg";
+import logoCenter from "../../assets/Logo Center.svg";
 import { Link } from "react-router-dom";
-import useOnClickOutside from "../helpers/useOnClickOutside";
-import Backdrop from "../components/Backdrop";
+import useOnClickOutside from "../../helpers/useOnClickOutside";
+import Backdrop from "../../components/Backdrop";
+import "./index.scss";
 
 const Landing = () => {
-  const classes = useStyles();
-
   const ref = useRef();
 
   useOnClickOutside(ref, () => setClicked(false));
 
   const [iconContainerHover, setIconContainerHover] = useState(false);
-  // const [iconHover, setIconHover] = useState(false);
 
   const [navHover, setNavHover] = useState(false);
   const [dialog, setDialog] = useState("");
@@ -56,12 +53,6 @@ const Landing = () => {
 
   const { backgroundOpacity } = useSpring({
     backgroundOpacity: iconContainerHover ? 1 : 0,
-    // transform: 0,
-    // opacity: 1,
-    from: {
-      // transform: 500,
-      // opacity: 0,
-    },
   });
 
   const icons = [
@@ -97,12 +88,12 @@ const Landing = () => {
   );
 
   return (
-    <div className={classes.container}>
-      <p className={classes.cornerText}>
+    <div className={"landing-page"}>
+      <p className={"landing-page__corner-text"}>
         I value <strong>Simple, Sleek, Efficient</strong>
       </p>
       <animated.p
-        className={classes.sideMessage}
+        className={"landing-page__side-message"}
         style={{
           ...animateSideMessage,
         }}
@@ -110,7 +101,7 @@ const Landing = () => {
         {dialog}
       </animated.p>
       <animated.div
-        className={classes.centerLogo}
+        className={"landing-page__center-logo"}
         style={{
           transform: xyz.interpolate(
             (x, y, z) => `translateY(${x}px) rotate(${y}deg) scale(${z})`
@@ -124,11 +115,15 @@ const Landing = () => {
         onMouseLeave={() => setHover(false)}
         onClick={() => setClicked(!clicked)}
       >
-        <img src={logoCenter} alt="logoCenter" className={classes.media} />
-        <text className={classes.logoText}>A</text>
+        <img
+          src={logoCenter}
+          alt="logoCenter"
+          className={"landing-page__center-logo__media"}
+        />
+        <text className={"landing-page__center-logo__logo-text"}>A</text>
       </animated.div>
       {clicked ? <Backdrop page="Landing" /> : null}
-      <nav className={classes.navigation} ref={ref}>
+      <nav className={"landing-page__navigation"} ref={ref}>
         {animateNavigation.map((navItem, index) => (
           <animated.div
             style={
@@ -139,28 +134,31 @@ const Landing = () => {
           >
             <Link
               to={navigation[index].link}
-              className={classes.link}
+              style={{
+                textDecoration: "none",
+                color: "var(--main-font-color)",
+              }}
               onMouseEnter={() => {
                 setNavHover(true);
                 setDialog(navigation[index].dialog);
               }}
               onMouseLeave={() => setNavHover(false)}
             >
-              <p className={classes.navItem}>{navigation[index].name}</p>
+              <p className={"landing-page__navigation__nav-item"}>
+                {navigation[index].name}
+              </p>
             </Link>
           </animated.div>
         ))}
       </nav>
       <animated.div
-        className={classes.contactIcons}
+        className={"landing-page__contact-icons"}
         onMouseEnter={() => setIconContainerHover(true)}
         onMouseLeave={() => setIconContainerHover(false)}
         style={{
-          // transform: transform.interpolate((t) => `translateX(${t}px)`),
           backgroundColor: backgroundOpacity.interpolate(
             (o) => `rgba(244, 91, 105,${o})`
           ),
-          // opacity: opacity,
         }}
       >
         {iconSprings.map((prop, index) => {
@@ -168,7 +166,7 @@ const Landing = () => {
             <animated.a
               href={icons[index].url}
               style={prop}
-              className={classes.icon}
+              className={"landing-page__contact-icons__icon"}
               target="blank"
             >
               <img
@@ -187,112 +185,3 @@ const Landing = () => {
 };
 
 export default Landing;
-
-const useStyles = createUseStyles({
-  container: {
-    height: "100vh",
-    display: "grid",
-    justifyItems: "center",
-    color: "var(--main-font-color)",
-    fontFamily: "var(--main-font)",
-    gridTemplateRows: "1fr 0.4fr 0.25fr",
-    "@media (min-width: 1024px)": {},
-  },
-  centerLogo: {
-    alignSelf: "flex-end",
-    display: "grid",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#1D1D1D",
-    borderRadius: "50%",
-    color: "var(--main-color)",
-    position: "relative",
-    fontSize: "3rem",
-    "@media (min-width: 1024px)": {
-      width: "320px",
-      height: "320px",
-      fontSize: "10rem",
-    },
-    width: "120px",
-    height: "120px",
-  },
-  media: {
-    "@media (min-width: 1024px)": {
-      width: "13rem",
-    },
-    width: "5rem",
-  },
-  navigation: {
-    display: "grid",
-    zIndex: 1,
-    gridTemplateRows: "min-content min-content",
-    rowGap: "2rem",
-    "@media (min-width: 1024px)": {
-      gridTemplateColumns: "1fr 1fr",
-      alignItems: "flex-start",
-      columnGap: "5rem",
-      overflow: "hidden",
-    },
-  },
-  navItem: {
-    fontSize: "1.4rem",
-    padding: "0.5rem",
-    width: "10rem",
-    backgroundColor: "rgba(255,255,255,0.25)",
-    borderRadius: "5px",
-    justifySelf: "center",
-    display: "grid",
-    justifyContent: "center",
-  },
-  contactIcons: {
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr",
-    // gridTemplateRows: "min-content",
-    alignSelf: "center",
-    columnGap: "1rem",
-    borderRadius: "10px",
-    alignItems: "center",
-    "@media (min-width: 1024px)": {
-      position: "fixed",
-      bottom: 30,
-      right: 100,
-      borderRadius: "5px",
-      columnGap: "4rem",
-      padding: "1rem",
-      zIndex: "1",
-    },
-  },
-  icon: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    width: 22,
-  },
-  link: {
-    textDecoration: "none",
-    color: "var(--main-font-color)",
-  },
-  sideMessage: {
-    position: "absolute",
-    top: "50%",
-    left: 100,
-    padding: "1rem",
-    fontSize: "1.6rem",
-  },
-  cornerText: {
-    "@media (min-width: 1024px)": {
-      position: "absolute",
-      bottom: 30,
-      left: 100,
-      padding: "1rem",
-      fontSize: "1.4rem",
-      display: "block",
-    },
-    display: "none",
-  },
-  logoText: {
-    position: "absolute",
-    left: "50%",
-    transform: `translate(-50%)`,
-  },
-});
