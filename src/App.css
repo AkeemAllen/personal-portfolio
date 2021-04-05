@@ -12,30 +12,7 @@
 
 #root {
   background-image: linear-gradient(180deg, #114b5f, #028090);
+  /* background-color: #f4f4f4; */
   font-family: "Share Tech";
   /* animation: backgroundAnimation 10s ease-in-out infinite; */
-}
-
-@keyframes backgroundAnimation {
-  0% {
-    /* background-image: linear-gradient(0deg, #028090, #114b5f); */
-    background-color: #028090;
-  }
-  25% {
-    background-color: #114b5f;
-
-    /* background-image: linear-gradient(180deg, #114b5f, #028090); */
-  }
-  50% {
-    background-color: #028090;
-    /* background-image: linear-gradient(0deg, #028090, #114b5f); */
-  }
-  75% {
-    background-color: #114b5f;
-    /* background-image: linear-gradient(270deg, #114b5f, #028090); */
-  }
-  100% {
-    background-color: #028090;
-    /* background-image: linear-gradient(360deg, #028090, #114b5f); */
-  }
 }
