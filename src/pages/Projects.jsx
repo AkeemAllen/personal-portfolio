@@ -22,7 +22,7 @@ const Projects = () => {
     {
       screenshot: portfolio,
       name: "Personal Portfolio",
-      url: "https://www.akeem.tech/",
+      url: "https://akeem-allen.netlify.app/",
       description: `
                       This website serves as a portfolio of my best pieces of work. 
                       It also serves as a testament to the growth of my skills as it took me less than a week to go
@@ -40,7 +40,7 @@ const Projects = () => {
     {
       screenshot: blog,
       name: "Personal Blog",
-      url: "https://blog.akeem.tech",
+      url: "https://akeem-blog.netlify.app/",
       description: `
         During one summer vacation, when I had a lot of free time and was getting into reading,
         I decided to try my hand at blogging. I also realized that it might be a great
